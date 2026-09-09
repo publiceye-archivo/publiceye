@@ -1,0 +1,62 @@
+.eye-logo {
+  display: inline-block;
+  cursor: pointer;
+  vertical-align: middle;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.eye-logo svg {
+  display: block;
+  overflow: visible;
+}
+
+.eye-logo .eye-shape,
+.eye-logo .eye-clip-path {
+  transition: d 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.eye-logo.blinking .eye-shape {
+  animation: eyeShapeBlink 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.eye-logo.blinking .eye-clip-path {
+  animation: eyeClipBlink 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes eyeShapeBlink {
+  0% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(0.05);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes eyeClipBlink {
+  0% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(0.05);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+.eye-logo.blinking .eye-shape,
+.eye-logo.blinking .eye-clip-path {
+  transform-origin: 100px 57.5px;
+  transform-box: fill-box;
+}
+
+body.dark .eye-logo .eye-outer {
+  fill: #fff;
+}
+body.dark .eye-logo .eye-pupil {
+  fill: #000;
+}

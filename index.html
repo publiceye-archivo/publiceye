@@ -1,0 +1,566 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Publiceye</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="eye.css" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13/dist/MorphSVGPlugin.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+  </head>
+  <body>
+    <header class="header" id="siteHeader">
+      <div class="logo">
+        <span class="logo-eye" id="logoEye"></span>
+        <span class="logo-brand" id="logoBrand">
+          <span class="morph-text" id="morphText1"></span>
+          <span class="morph-text" id="morphText2"></span>
+          <svg class="morph-filters" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <filter id="threshold">
+                <feColorMatrix
+                  in="SourceGraphic"
+                  type="matrix"
+                  values="1 0 0 0 0
+              0 1 0 0 0
+              0 0 1 0 0
+              0 0 0 255 -140"
+                />
+              </filter>
+            </defs>
+          </svg>
+        </span>
+      </div>
+      <nav class="nav">
+        <div class="search-wrap" id="searchWrap">
+          <span class="search-link" id="searchLink">search the archive</span>
+          <input
+            type="text"
+            class="search-input"
+            id="searchInput"
+            placeholder=""
+          />
+        </div>
+        <div class="pages-wrap">
+          <button class="pages-btn" id="pagesBtn">
+            <span id="pagesBtnLabel">about</span>
+            <svg
+              viewBox="0 0 12 12"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path d="M2 4l4 4 4-4" />
+            </svg>
+          </button>
+          <div class="pages-dropdown" id="pagesDropdown"></div>
+        </div>
+        <div class="mode-wrap">
+          <button class="mode-btn" id="modeBtn">
+            <span>mode</span>
+            <svg
+              viewBox="0 0 12 12"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path d="M2 4l4 4 4-4" />
+            </svg>
+          </button>
+          <div class="mode-dropdown" id="modeDropdown"></div>
+        </div>
+      </nav>
+      <button class="hamburger" id="hamburgerBtn">
+        <span></span><span></span><span></span>
+      </button>
+    </header>
+
+    <div class="mobile-menu" id="mobileMenu">
+      <button class="mobile-menu-close" id="mobileMenuClose">&#215;</button>
+
+      <div class="mobile-search-wrap">
+        <input
+          type="text"
+          class="mobile-search-input"
+          id="mobileSearchInput"
+          placeholder="search the archive"
+        />
+      </div>
+
+      <div class="mobile-section-label">navigate</div>
+      <div class="mobile-dropdown-group" id="mobilePagesGroup">
+        <button class="mobile-dropdown-btn" id="mobilePagesBtn">
+          <span id="mobilePagesLabel">about</span>
+          <svg
+            viewBox="0 0 12 12"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+          >
+            <path d="M2 4l4 4 4-4" />
+          </svg>
+        </button>
+        <div class="mobile-dropdown-items" id="mobilePagesItems"></div>
+      </div>
+
+      <div class="mobile-section-label">display</div>
+      <div class="mobile-dropdown-group" id="mobileModeGroup">
+        <button class="mobile-dropdown-btn" id="mobileModeBtn">
+          <span id="mobileModeBtnLabel">mode</span>
+          <svg
+            viewBox="0 0 12 12"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+          >
+            <path d="M2 4l4 4 4-4" />
+          </svg>
+        </button>
+        <div class="mobile-dropdown-items" id="mobileModeItems"></div>
+      </div>
+    </div>
+
+    <div class="page-body" id="pageBody">
+      <div class="page-view" id="pageHome">
+        <section class="hero" aria-labelledby="hero-title">
+          <h2 id="hero-title" class="sr-only">Bold and audacious design</h2>
+
+          <div class="hero__row hero__row--bold">
+            <div class="hero__word" aria-hidden="true">BOLD</div>
+            <div class="image-strip">
+              <figure style="--w: 76px">
+                <img
+                  src="images/optimized/row1-1.webp"
+                  alt="Brown leather jacket"
+                  loading="lazy"
+                />
+              </figure>
+              <figure style="--w: 77px">
+                <video
+                  src="images/optimized/row1-2-video.mp4"
+                  autoplay
+                  muted
+                  loop
+                  playsinline
+                  preload="metadata"
+                  aria-label="Compact disc editorial sequence"
+                ></video>
+              </figure>
+              <figure style="--w: 61px">
+                <img
+                  src="images/optimized/row1-3.webp"
+                  alt="Musician beside a railway track"
+                  loading="lazy"
+                />
+              </figure>
+              <figure style="--w: 78px">
+                <img
+                  src="images/optimized/row1-4.webp"
+                  alt="Snow-covered mountain range"
+                  loading="lazy"
+                />
+              </figure>
+              <figure style="--w: 65px">
+                <img
+                  src="images/optimized/row4-3.webp"
+                  alt="Two men riding in a convertible"
+                  loading="lazy"
+                />
+              </figure>
+            </div>
+          </div>
+
+          <div class="hero__row hero__row--amp">
+            <div class="hero__word hero__word--amp" aria-hidden="true">
+              &amp;
+            </div>
+            <div class="image-strip">
+              <figure style="--w: 109px">
+                <img
+                  src="images/optimized/row2-1.webp"
+                  alt="Industrial wristwatch"
+                  loading="lazy"
+                />
+              </figure>
+              <figure style="--w: 61px">
+                <img
+                  src="images/optimized/row2-2.webp"
+                  alt="Dark monogram jacket"
+                  loading="lazy"
+                />
+              </figure>
+              <figure style="--w: 132px">
+                <video
+                  src="images/optimized/row2-3-video.mp4"
+                  autoplay
+                  muted
+                  loop
+                  playsinline
+                  preload="metadata"
+                  aria-label="Row two editorial sequence"
+                ></video>
+              </figure>
+              <figure style="--w: 57px">
+                <img
+                  src="images/optimized/row2-3.webp"
+                  alt="Vintage automobile grille"
+                  loading="lazy"
+                />
+              </figure>
+              <figure style="--w: 169px">
+                <video
+                  src="images/optimized/row2-4.mp4"
+                  autoplay
+                  muted
+                  loop
+                  playsinline
+                  preload="metadata"
+                  aria-label="Animated blue night landscape"
+                ></video>
+              </figure>
+            </div>
+          </div>
+
+          <div class="hero__row hero__row--audacious">
+            <div class="hero__word" aria-hidden="true">AUDACIOUS</div>
+            <div class="image-strip">
+              <figure style="--w: 119px">
+                <img
+                  src="images/optimized/row3-1.webp"
+                  alt="Man seated in a red car"
+                  loading="lazy"
+                />
+              </figure>
+            </div>
+          </div>
+
+          <div class="hero__row hero__row--design">
+            <div class="hero__word" aria-hidden="true">DESIGN</div>
+            <div class="image-strip">
+              <figure style="--w: 76px">
+                <img
+                  src="images/optimized/row4-1.webp"
+                  alt="Prada Marfa storefront"
+                  loading="lazy"
+                />
+              </figure>
+              <figure style="--w: 56px">
+                <img
+                  src="images/optimized/row4-2.webp"
+                  alt="Woman in a black evening dress"
+                  loading="lazy"
+                />
+              </figure>
+              <figure style="--w: 190px">
+                <video
+                  src="images/optimized/row4-4.mp4"
+                  autoplay
+                  muted
+                  loop
+                  playsinline
+                  preload="metadata"
+                  aria-label="Editorial fashion sequence"
+                ></video>
+              </figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="home-divider"></div>
+
+        <section class="home-statement">
+          <p class="home-statement-eyebrow">
+            Publiceye &amp; Associated Archives
+          </p>
+          <p class="home-statement-lead">
+            A living archive of the moments where fashion, film, and design
+            collided &mdash; catalogued, restored, and put back on view.
+          </p>
+        </section>
+      </div>
+
+      <div class="page-view" id="pageWardrobe">
+        <section class="hero-section" id="heroSection">
+          <div class="hero-inner">
+            <div class="hero-top">
+              <h1 class="hero-title" id="heroTitleContainer">
+                <span class="hero-text-left" id="heroTextLeft">wardr</span>
+                <span class="hero-o-svg" id="heroOSvg">
+                  <svg
+                    id="heroMorphSvg"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 210 115"
+                  >
+                    <g id="endPaths">
+                      <path
+                        id="end0"
+                        d="M147.41,98.63c-11.21,10.71-27.04,16.32-43.36,16.32s-32.15-5.61-43.36-16.32c-11.7-11.21-17.31-26.54-17.31-41.05s5.6-30.17,17.31-41.21C71.91,5.65,87.73.05,104.05.05s32.15,5.6,43.36,16.32c11.7,11.04,17.31,26.54,17.31,41.21s-5.61,29.84-17.31,41.05ZM81.8,36.48c-5.93,5.77-8.74,13.85-8.74,21.6,0,9.73,4.62,16.49,8.74,20.44,5.28,5.11,12.69,8.74,22.26,8.74s16.98-3.46,22.09-8.57c5.11-5.11,8.9-12.69,8.9-21.1s-3.79-16.16-8.9-21.1c-6.1-5.77-14.51-8.74-22.09-8.74s-16.32,2.8-22.26,8.74Z"
+                      />
+                    </g>
+                    <g id="startPaths">
+                      <path
+                        id="start0"
+                        d="M195.81,55.13c-4.06-6.73-9.22-14.51-14.66-19.57-2.93-3.03-6.06-5.86-9.28-8.7-4.79-4.3-9.97-8.01-15.73-11.24-2.54-1.47-5.18-2.83-8.01-4.2-1.47-.68-2.83-1.47-4.2-2.05-.98-.39-2.05-.78-3.03-1.27-1.56-.59-3.13-1.37-4.69-1.86-2.44-.78-4.98-1.56-7.52-2.25-2.64-.68-5.28-1.47-8.01-1.95-3.42-.59-6.84-1.07-10.26-1.47-2.93-.29-5.86-.59-8.89-.59-4.1,0-8.21.1-12.41.29-1.86.1-3.81.29-5.76.59-3.22.49-6.35.98-9.48,1.56-1.95.39-3.81.88-5.67,1.37-3.22.98-6.55,1.95-9.87,3.03-1.95.59-3.81,1.37-5.57,2.25-2.44,1.07-4.89,2.25-7.23,3.42-7.13,3.71-13.78,8.31-20.03,15.34-5.28,4.4-10.16,9.18-14.56,14.66-4.1,4.89-7.82,9.97-10.94,15.54,0,.2,0,.88.1,1.07.39.88.78,1.76,1.37,2.34,2.83,4.01,5.67,8.21,8.79,12.02,3.22,3.91,6.84,7.62,10.45,11.24,4.01,3.91,8.4,7.43,13.09,10.55,5.47,3.81,11.14,7.13,17.29,9.77,3.81,1.66,7.72,3.03,11.63,4.49,4.89,1.76,9.97,2.83,15.05,3.71,5.76.98,11.63,1.56,17.49,1.76,1.56,0,2.93,0,4.49-.1,1.47,0,2.83-.1,4.4-.2,6.16-.2,11.24-1.07,17.2-2.34,5.86-1.27,11.33-3.03,16.9-5.18,6.45-2.54,12.6-5.76,18.56-9.48,7.23-4.59,13.78-9.87,20.71-15.93,4.3-4.3,8.11-8.79,11.82-13.78,2.05-2.93,4.1-5.96,6.16-9.18.35-.62.55-.89.59-2.59,0-.39-.09-.77-.29-1.1ZM158.55,79.79c-5.62,5.84-13.59,9.8-24.28,9.8s-18.66-4.15-24.46-9.99c-4.53-4.52-9.6-12.25-9.6-23.36,0-8.86,3.08-18.09,9.6-24.68,6.52-6.78,15.76-9.99,24.46-9.99s17.58,3.39,24.28,9.99c5.62,5.65,9.78,14.32,9.78,24.12s-4.17,18.27-9.78,24.12Z"
+                      />
+                    </g>
+                  </svg>
+                </span>
+                <span class="hero-text-right" id="heroTextRight">be</span>
+              </h1>
+            </div>
+          </div>
+        </section>
+
+        <main class="main" id="mainGrid">
+          <section class="left-panel" id="leftPanel">
+            <div class="decade-header-sticky" id="decadeHeaderSticky">
+              <div class="decade-header" id="decadeHeader">
+                <h1 class="decade-title" id="decadeTitle"></h1>
+                <button class="decade-toggle" id="decadeToggle">
+                  <svg
+                    viewBox="0 0 32 32"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path d="M6 12l10 10 10-10" />
+                  </svg>
+                </button>
+              </div>
+              <div class="decade-line"></div>
+              <div class="decade-dropdown" id="decadeDropdown"></div>
+            </div>
+            <div class="thumbnails-area" id="thumbsArea"></div>
+          </section>
+          <section class="middle-panel" id="middlePanel">
+            <div class="detail-year" id="detailYear"></div>
+            <div class="detail-desc" id="detailDesc"></div>
+            <div class="detail-credit" id="detailCredit"></div>
+            <button class="detail-view-btn" id="viewDetailsBtn">
+              <span>View full details</span><svg class="details-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" width="24" height="24" aria-hidden="true" focusable="false"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg>
+            </button>
+          </section>
+          <section class="right-panel" id="rightPanel">
+            <img id="featuredImg" src="" alt="Featured" />
+          </section>
+        </main>
+
+        <section class="bottom-section">
+          <div class="bottom-content">
+            <h2 class="bottom-title">All looks on view</h2>
+            <p class="bottom-desc">
+              Discover the current selection of looks and collections,
+              accessible online for a limited time only.
+            </p>
+            <button class="bottom-btn">EXPLORE ALL</button>
+          </div>
+        </section>
+      </div>
+
+      <div class="page-view" id="pageBlog">
+        <section class="blog-page">
+          <h1 class="sr-only">Blog issues</h1>
+          <div class="blog-list" id="blogList"></div>
+        </section>
+      </div>
+
+      <div class="page-view" id="pageArticle">
+        <main
+          class="journal-post"
+          id="journalPost"
+          aria-labelledby="postTitle"
+        ></main>
+      </div>
+
+      <div class="page-view" id="pageAbout">
+        <section class="about-page">
+          <p class="about-eyebrow">About</p>
+          <h1 class="about-headline">
+            We keep the record of how style was <em>made</em>, <em>worn</em>,
+            and <em>remembered</em>.
+          </h1>
+          <div class="about-body">
+            <div class="about-col">
+              <p>
+                Publiceye is an independent archive of fashion, film, and
+                design. We collect the artifacts that ordinary histories
+                overlook &mdash; the labels, the contact sheets, the press
+                clippings, the reels &mdash; and we restore them so they can be
+                seen again.
+              </p>
+              <p>
+                What began as a private collection of garments and stills has
+                grown into a catalogued, decade-by-decade record open to
+                researchers, designers, and the merely curious.
+              </p>
+            </div>
+            <div class="about-col">
+              <img
+                src="images/home/grid-6.png"
+                alt="Couture atelier interior"
+                loading="lazy"
+              />
+            </div>
+          </div>
+          <div class="about-stats">
+            <div class="about-stat">
+              <span class="about-stat-num">6</span>
+              <span class="about-stat-label">Decades catalogued</span>
+            </div>
+            <div class="about-stat">
+              <span class="about-stat-num">2,400+</span>
+              <span class="about-stat-label">Archived artifacts</span>
+            </div>
+            <div class="about-stat">
+              <span class="about-stat-num">1975</span>
+              <span class="about-stat-label">Earliest record</span>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="page-view" id="pageItemDetail">
+        <div class="item-detail-backbar">
+          <button class="item-detail-back" id="itemDetailBack">
+            <svg
+              class="back-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 -960 960 960"
+              width="24"
+              height="24"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path
+                d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"
+              /></svg
+            ><span>Back</span>
+          </button>
+        </div>
+        <div class="item-detail-content">
+          <div class="item-detail-visual">
+            <div class="item-detail-media">
+              <img id="itemDetailImg" src="" alt="" />
+            </div>
+            <div class="item-detail-gallery" id="itemDetailGallery"></div>
+          </div>
+          <div class="item-detail-info">
+            <h1 class="item-detail-code" id="itemDetailCode"></h1>
+            <div class="item-detail-meta-grid">
+              <div class="item-detail-meta-cell">
+                <span class="meta-label">Line</span>
+                <span class="meta-value" id="itemDetailLine"></span>
+              </div>
+              <div class="item-detail-meta-cell">
+                <span class="meta-label">Season</span>
+                <span class="meta-value" id="itemDetailSeason"></span>
+              </div>
+              <div class="item-detail-meta-cell">
+                <span class="meta-label">Year</span>
+                <span class="meta-value" id="itemDetailYear"></span>
+              </div>
+              <div
+                class="item-detail-meta-cell item-detail-grade"
+                id="itemDetailGrade"
+              ></div>
+              <div class="item-detail-meta-cell">
+                <span class="meta-label">Gender</span>
+                <span class="meta-value" id="itemDetailGender"></span>
+              </div>
+            </div>
+            <div class="item-detail-section item-detail-purchase-row">
+              <div
+                class="item-detail-purchase-action"
+                id="itemDetailPurchaseAction"
+              ></div>
+            </div>
+            <div class="item-detail-section item-detail-section-last">
+              <span class="meta-label">Description</span>
+              <p class="item-detail-desc" id="itemDetailDesc"></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-detail-explore">
+          <h2
+            class="item-detail-explore-title"
+            id="itemDetailExploreTitle"
+          ></h2>
+          <div class="item-detail-explore-row">
+            <div class="item-detail-explore-action">
+              <button
+                class="explore-collection-btn"
+                id="itemDetailExploreBtn"
+                type="button"
+              >
+                Explore Collection
+              </button>
+            </div>
+            <div class="item-detail-explore-media">
+              <img id="itemDetailExploreImg" src="" alt="" loading="lazy" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="footer">
+        <div class="footer-row">
+          <div class="footer-cell"><a href="#">Privacy Policy</a></div>
+          <div class="footer-cell"><a href="#">Cookie policy</a></div>
+          <div class="footer-cell"><a href="#">Cookie settings</a></div>
+          <div class="footer-cell"><a href="#">Terms and conditions</a></div>
+        </div>
+        <div class="footer-row">
+          <div class="footer-cell"><span>&#169;2025 Publiceye</span></div>
+          <div class="footer-cell"><a href="#">Contact Us</a></div>
+          <div class="footer-cell"><a href="#">Publiceye.com</a></div>
+          <div class="footer-cell">
+            <div class="footer-icons">
+              <a href="#" aria-label="Instagram"
+                ><svg viewBox="0 0 24 24">
+                  <path
+                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"
+                  /></svg
+              ></a>
+              <a href="#" aria-label="LinkedIn"
+                ><svg viewBox="0 0 24 24">
+                  <path
+                    d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
+                  /></svg
+              ></a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <div class="mobile-detail-overlay" id="mobileDetail">
+      <div class="mobile-detail-top">
+        <button class="mobile-detail-back" id="mobileDetailBack">
+          <svg
+            class="back-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 -960 960 960"
+            width="24"
+            height="24"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path
+              d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"
+            /></svg
+          ><span>Back</span>
+        </button>
+      </div>
+      <div class="mobile-detail-body" id="mobileDetailBody"></div>
+    </div>
+
+    <script src="eye.js"></script>
+    <script src="article.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
+
+
