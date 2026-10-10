@@ -1,0 +1,210 @@
+/* ─────────────────────────────────────────────
+   PAGE ROUTING
+   ───────────────────────────────────────────── */
+.page-view {
+  display: none;
+}
+.page-view.active {
+  display: block;
+  /* #pageBody is a flex column with a fixed viewport height and
+     overflow-y:auto for scrolling. As a flex item, this defaults to
+     flex-shrink:1, so when a page's real content (e.g. wardrobe's tall
+     decades grid) is far taller than that fixed box, flexbox shrinks this
+     element's computed height to help fit the container — its children
+     then visually overflow past that shrunk box (since overflow:visible),
+     while <footer>, the next flex sibling, lays out right after the
+     shrunk box and ends up rendered on top of that overflowing content.
+     flex-shrink:0 keeps this at its natural content height so footer
+     always lands after the real content, on every page. */
+  flex-shrink: 0;
+}
+
+/* ─────────────────────────────────────────────
+   HOME PAGE
+   ───────────────────────────────────────────── */
+/* The header is a normal in-flow sticky element on every page (including
+   home), so #pageHome is made a flex column that grows to fill whatever
+   viewport space is left below it and centers the hero within that —
+   flex-grow with an auto basis (rather than shrink or a viewport-unit
+   min-height on .hero) means it fills leftover space when there's room
+   but never shrinks below the hero's own content height. */
+#pageHome.active {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+}
+
+.hero-stage {
+  min-height: max(560px, calc(100svh - var(--site-header-height, 101px)));
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+/* Hero — kept pixel-identical to the provided reference markup/CSS
+   (fixed 658px column, fixed-width tiles via the --w custom property)
+   rather than the site's fluid clamp()-based sizing used elsewhere. */
+.hero {
+  width: 658px;
+  margin-inline: auto;
+  padding-block: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0;
+  /* Scales the whole fixed-pixel composition up a bit from its own
+     center, rather than hand-adjusting every row height, word font-size,
+     and letter-spacing value individually — keeps all the reference
+     proportions intact. */
+  transform: scale(1.25);
+  transform-origin: center;
+}
+
+.hero__row {
+  width: 658px;
+  height: 78px;
+  display: flex;
+  align-items: stretch;
+  flex: 0 0 auto;
+}
+
+.hero__row--amp {
+  height: 74px;
+  margin-top: 8px;
+}
+.hero__row--audacious {
+  height: 79px;
+  margin-top: 6px;
+  gap: 3px;
+}
+.hero__row--design {
+  height: 76px;
+  margin-top: 5px;
+  gap: 8px;
+}
+
+.hero__word {
+  height: 100%;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  font-family: "ITC Avant Garde", Arial, sans-serif;
+  font-size: 105px;
+  font-weight: 500;
+  line-height: 0.72;
+  letter-spacing: -0.072em;
+  white-space: nowrap;
+  color: #000;
+  transition: color 0.3s;
+}
+body.dark .hero__word {
+  color: #fff;
+}
+
+.hero__row--bold .hero__word {
+  width: 255px;
+}
+.hero__row--amp .hero__word {
+  width: 83px;
+  font-size: 104px;
+}
+.hero__row--audacious .hero__word {
+  width: 516px;
+  font-size: 103px;
+}
+.hero__row--design .hero__word {
+  width: 324px;
+  font-size: 103px;
+}
+
+.image-strip {
+  height: 100%;
+  min-width: 0;
+  flex: 1 0 auto;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 2px;
+  overflow: visible;
+}
+.hero__row--audacious .image-strip {
+  justify-content: flex-end;
+}
+
+.image-strip figure {
+  width: var(--w);
+  height: 100%;
+  flex: 0 0 var(--w);
+  margin: 0;
+  overflow: hidden;
+  background: transparent;
+}
+
+.image-strip img,
+.image-strip video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-position: center;
+}
+.image-strip img {
+  object-fit: contain;
+}
+.image-strip video {
+  object-fit: cover;
+}
+
+@media (max-width: 690px) {
+  .hero-stage {
+    min-height: 510px;
+    place-items: center start;
+  }
+  .hero {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+}
+
+/* Full-bleed hairline directly under the hero, edge to edge like the
+   header/footer, instead of a short rule confined to the inset column. */
+.home-divider {
+  border-top: 1px solid #000;
+  width: 100%;
+  transition: border-color 0.3s;
+}
+body.dark .home-divider {
+  border-color: #fff;
+}
+
+/* Home statement — inset "page" panel, magazine-style negative space on
+   either side. Only the header, hero, and footer keep full-bleed width. */
+.home-statement {
+  max-width: 760px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 32px 0 96px;
+}
+.home-statement-eyebrow {
+  font-family: "Futura Boo", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  color: #666;
+}
+body.dark .home-statement-eyebrow {
+  color: #999;
+}
+.home-statement-lead {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: clamp(20px, 2.6vw, 32px);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  max-width: 34ch;
+  color: #000;
+  transition: color 0.3s;
+  text-wrap: balance;
+}
+body.dark .home-statement-lead {
+  color: #fff;
+}
