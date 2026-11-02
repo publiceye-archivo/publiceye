@@ -642,19 +642,31 @@ body.dark .info-page--submissions { background: transparent; color: inherit; }
 .info-page--extras {
   width: min(100% - 64px, 1100px);
   min-height: 520px;
+  padding-top: 80px;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
 }
 .extras-links {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 18px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   width: 100%;
-  max-width: 760px;
   margin-inline: auto;
 }
 .extras-links:empty { display: none; }
+.extras-column {
+  width: fit-content;
+  max-width: calc(100% - 32px);
+  justify-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+.extras-spacer {
+  display: block;
+  height: 18px;
+}
 .extras-link {
   display: inline-flex;
   align-items: center;
@@ -793,6 +805,7 @@ body.dark .info-page--submissions { background: transparent; color: inherit; }
   .info-page--contact .info-action { grid-column: 1; }
   .info-page--authors .info-section { grid-template-columns: 34px 1fr; }
   .info-page--authors .info-section p { grid-column: 2; }
-  .info-page--extras { width: calc(100% - 32px); min-height: 380px; }
-  .extras-links { gap: 16px; }
+  .info-page--extras { width: calc(100% - 32px); min-height: 380px; padding-top: 56px; }
+  .extras-links { grid-template-columns: 1fr; gap: 48px; }
+  .extras-column { gap: 16px; }
 }

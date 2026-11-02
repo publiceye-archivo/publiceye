@@ -29,7 +29,7 @@ function initSearch(){
       });
     });
 
-    var issues=(typeof BLOG_POSTS==='undefined'?[]:BLOG_POSTS).filter(function(post){
+    var issues=(typeof ISSUES==='undefined'?[]:ISSUES).filter(function(post){
       return [post.title,blogDate(post.published),post.labels&&post.labels.join(' '),'blog issue journal'].join(' ').toLowerCase().indexOf(query)!==-1;
     });
     var total=wardrobe.length+issues.length;

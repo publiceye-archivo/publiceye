@@ -98,7 +98,7 @@ function initHeroEyeMorph() {
 function init(){
   render();
   renderBlog();
-  loadBlogPosts();
+  loadIssues();
   initSearch();
   initItemDetail();
   applyTheme('light');

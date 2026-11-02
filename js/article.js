@@ -1,5 +1,5 @@
-/* Shared article template. Blogger posts are synchronized into a local JSON
-   file at build time, so reading an issue never contacts Blogger directly. */
+/* Shared article template. Issue metadata lives in blog/issues.json and each
+   article body is loaded from its own HTML file in blog/issues/. */
 (function () {
   'use strict';
   function safeUrl(value) {
@@ -10,7 +10,7 @@
   }
 
   // Rebuild permitted editorial markup; discard scripts, embeds, styles,
-  // event handlers, and arbitrary attributes from imported Blogger HTML.
+  // event handlers, and arbitrary attributes from issue HTML files.
   function cleanContent(html) {
     var parsed = new DOMParser().parseFromString(html || '', 'text/html');
     var allowed = /^(P|BR|STRONG|B|EM|I|U|S|H2|H3|H4|BLOCKQUOTE|UL|OL|LI|FIGURE|FIGCAPTION|IMG|A|DIV|SPAN|HR)$/;
@@ -48,7 +48,8 @@
     document.getElementById('postDeck').textContent = post.subtitle || '';
     document.getElementById('postDeck').hidden = !post.subtitle;
     var time = document.getElementById('postDate');
-    var date = new Date(post.date);
+    var dateValue = /^\d{4}-\d{2}-\d{2}$/.test(post.date || '') ? post.date + 'T12:00:00' : post.date;
+    var date = new Date(dateValue);
     time.hidden = !post.date || isNaN(date.getTime());
     document.getElementById('postCredits').hidden = time.hidden;
     if (!time.hidden) {
@@ -65,40 +66,54 @@
   }
 
   var posts = {};
+  var pending = {};
+
+  function loadAndRender(id) {
+    var post = posts[id];
+    if (!post) {
+      showPage('blog');
+      return;
+    }
+    if (typeof post.content === 'string') {
+      render(post);
+      return;
+    }
+    if (!post.contentFile || pending[id]) return;
+    pending[id] = fetch(post.contentFile, {cache: 'no-cache'})
+      .then(function (response) {
+        if (!response.ok) throw new Error('Issue file unavailable');
+        return response.text();
+      })
+      .then(function (html) {
+        post.content = html;
+        if (location.hash === '#post/' + id) render(post);
+      })
+      .catch(function () {
+        if (location.hash === '#post/' + id) showPage('blog');
+      })
+      .finally(function () { delete pending[id]; });
+  }
+
   function route() {
     if (location.hash.indexOf('#post/') === 0) {
       var id = location.hash.slice(6);
-      if (posts[id]) render(posts[id]);
-      else {
-        showPage('blog');
-      }
+      loadAndRender(id);
     } else if (location.hash === '#blog') showPage('blog');
   }
   window.PubliceyeArticles = {
-    registerPosts: function (incoming) {
-      (incoming || []).forEach(function (post) {
-        posts[String(post.id)] = {
-          title: post.title || 'Untitled',
-          subtitle: post.subtitle || '',
-          category: (post.labels || ['Journal'])[0],
-          author: post.author && post.author.displayName,
-          date: post.published,
-          content: post.content || ''
+    registerIssues: function (incoming) {
+      (incoming || []).forEach(function (issue) {
+        posts[String(issue.id)] = {
+          title: issue.title || 'Untitled',
+          subtitle: issue.subtitle || '',
+          category: (issue.labels || ['Journal'])[0],
+          author: issue.author || '',
+          date: issue.published,
+          contentFile: issue.contentFile || '',
+          content: typeof issue.content === 'string' ? issue.content : null
         };
       });
       route();
-    },
-    showBloggerPost: function (post) {
-      var id = encodeURIComponent(String(post.id));
-      posts[id] = {
-        title: post.title || 'Untitled',
-        category: (post.labels || ['Journal'])[0],
-        author: post.author && post.author.displayName,
-        date: post.published,
-        content: post.content || ''
-      };
-      if (location.hash === '#post/' + id) route();
-      else location.hash = 'post/' + id;
     }
   };
   window.initArticle = function () {

@@ -67,8 +67,50 @@
       title: 'Extras',
       intro: '',
       sections: [],
-      links: [
-        ['tedkoller.com', 'https://tedkoller.com/']
+      linkColumns: [
+        [
+
+          null,
+
+          ['tedkoller.com', 'https://tedkoller.com/'],
+          ['American Society of Cinematographers', 'https://theasc.com/'],
+          ['Steve Yedlin Display Prep Demo', 'https://www.yedlin.net/DisplayPrepDemo/DispPrep_v2_websize_20mbps'],
+          ['demystify-color', 'https://www.demystify-color.com/books'],
+          ['Criterion Current', 'https://www.criterion.com/current/posts'],
+          ['Cadillac Archivo', 'https://www.tunnelram.com/cadillac'],
+          ['Eros', 'https://eros.110west40th.com/'],
+          ['Yusaku Kamekura posters', 'https://pinktentacle.com/2010/03/yusaku-kamekura-posters'],
+          ['Celebrating Herb Lubalin', 'https://lubalin100.com/'],
+          ['Heman Miller: Brand Standards', 'https://brandstandards.hermanmiller.com/'],
+          ['Design Culture Interviews', 'https://www.designculture.it/interview.html'],
+          ['The Musée Yves Saint Laurent Paris', 'https://museeyslparis.com/en/biography'],
+          ['Franco Grignani', 'https://www.francogrignani.info/'],
+          ['Alliance Graphique Internationale: Pierluigi Cerri', 'https://a-g-i.org/user/pierluigicerri/'],
+          ['Alliance Graphique Internationale', 'https://a-g-i.org'],
+          ['Archivio Grafica Italiana', 'https://www.archiviograficaitaliana.com/']
+        ],
+        [
+
+          null,
+
+          ['AI is creating a human premium for art', 'https://www.bbc.com/news/articles/c5vgjm3gk7rzo'],
+          ['AI is not concious', 'https://theconvivialsociety.substack.com/p/ai-is-not-conscious-but-it-is-becoming'],
+          ['Disenchantment with the Post-AI Internet', 'https://lukesmith.xyz/articles/disenchantment-with-the-post-ai-internet/'],
+          ['The Parallax View: Dark Towers', 'https://www.criterion.com/current/posts/7272-the-parallax-view-dark-towers'],
+          ['Herb Lubalin: the Letter as an Image', 'https://grapheine.com/en/magazine/herb-lubalin-the-letter-as-image/'],
+          ['There’s Too Much Damn Content', 'https://eyeondesign.aiga.org/theres-too-much-damn-content-and-slick-ux-design-is-making-it-worse'],
+          ['Zenith Shot', 'https://www.researchgate.net/figure/Example-of-nadir-left-and-zenith-shot-or-bird-eye-right_fig1_352135520'],
+          ['Photographing All the Presidents Men', 'https://theasc.com/article/flashback-all-the-presidents-men'],
+          ['Kodak Eastman Color', 'https://filmcolors.org/timeline-entry/1310/'],
+
+          null,
+
+          ['Movie Computer Interfaces', 'https://gui.neocities.org/#https://random.waxy.org/images/screenshots/'],
+          ['Material Point Method', 'https://nialltl.neocities.org/'],
+          ['Feedback Noise Machine', 'https://www.peamarte.it/lucien_dargue_series/vortessa/vortessa_landing.html'],
+          ['Open DeNoise', 'https://github.com/opendenoising/opendenoising-benchmark/blob/master/docs/README.md'],
+          ['Movie Computer Interfaces', 'https://gui.neocities.org/#https://random.waxy.org/images/screenshots/']
+        ]
       ]
     }
   };
@@ -114,11 +156,23 @@
           : (link[1] === '#' ? ' aria-disabled="true"' : ' target="_blank" rel="noreferrer"');
         return '<a class="extras-link" href="' + link[1] + '"' + internal + '><span>' + link[0] + '</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></a>';
       }).join('');
+      var linkColumns = (page.linkColumns || []).map(function (column) {
+        var columnLinks = column.map(function (link) {
+          if (link === null) {
+            return '<span class="extras-spacer" aria-hidden="true"></span>';
+          }
+          var internal = link[2]
+            ? ' data-page-link="' + link[2] + '"'
+            : (link[1] === '#' ? ' aria-disabled="true"' : ' target="_blank" rel="noreferrer"');
+          return '<a class="extras-link" href="' + link[1] + '"' + internal + '><span>' + link[0] + '</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></a>';
+        }).join('');
+        return '<div class="extras-column">' + columnLinks + '</div>';
+      }).join('');
       var action = page.action
         ? '<a class="info-action" href="' + page.action[1] + '">' + page.action[0] + '</a>'
         : '';
       if (key === 'extras') {
-        mount.innerHTML = '<main class="info-page info-page--extras"><nav class="extras-links" aria-label="External links">' + links + '</nav></main>';
+        mount.innerHTML = '<main class="info-page info-page--extras"><nav class="extras-links" aria-label="External links">' + (linkColumns || links) + '</nav></main>';
         return;
       }
       mount.innerHTML = '<main class="info-page info-page--' + key + '"><h1>' + page.title + '</h1><p class="info-intro">' + page.intro + '</p><div class="info-sections">' + sections + '</div><div class="contact-list">' + contacts + '</div>' + action + '<p class="info-updated">Last updated September 30, 2026</p></main>';

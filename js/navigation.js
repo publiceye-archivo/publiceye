@@ -65,10 +65,11 @@ function showPage(page){
   renderPagesDropdown();
 }
 
-var BLOG_POSTS=[];
+var ISSUES=[];
 
 function blogDate(value){
-  var date=new Date(value);
+  var dateValue=/^\d{4}-\d{2}-\d{2}$/.test(value||'')?value+'T12:00:00':value;
+  var date=new Date(dateValue);
   return isNaN(date.getTime())?'':date.toLocaleDateString('en-US',{month:'short',year:'numeric'});
 }
 
@@ -76,7 +77,7 @@ function renderBlog(){
   var el=document.getElementById('blogList');
   if(!el) return;
   el.replaceChildren();
-  var issues=BLOG_POSTS;
+  var issues=ISSUES;
   if(!issues.length){
     var empty=document.createElement('p');
     empty.className='search-empty';
@@ -114,22 +115,22 @@ function renderBlog(){
   });
 }
 
-function loadBlogPosts(){
-  return fetch('data/blog-posts.json',{cache:'no-cache'})
+function loadIssues(){
+  return fetch('blog/issues.json',{cache:'no-cache'})
     .then(function(response){
-      if(!response.ok) throw new Error('Blog data unavailable');
+      if(!response.ok) throw new Error('Issue index unavailable');
       return response.json();
     })
     .then(function(data){
-      BLOG_POSTS=Array.isArray(data.posts)?data.posts:[];
-      if(window.PubliceyeArticles) window.PubliceyeArticles.registerPosts(BLOG_POSTS);
+      ISSUES=Array.isArray(data.posts)?data.posts:[];
+      if(window.PubliceyeArticles) window.PubliceyeArticles.registerIssues(ISSUES);
       renderBlog();
-      return BLOG_POSTS;
+      return ISSUES;
     })
     .catch(function(){
-      BLOG_POSTS=[];
+      ISSUES=[];
       renderBlog();
-      return BLOG_POSTS;
+      return ISSUES;
     });
 }
 
